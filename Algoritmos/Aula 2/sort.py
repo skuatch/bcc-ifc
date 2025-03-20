@@ -11,7 +11,7 @@ import random
         and so on....
     b. does the same for each and every item on the list
 3. returns the sorted list (also changes its order, I was just too lazy to switch the code)
-4. The time complexity of this algorithm is O(n*n!)
+4. The time complexity of this algorithm is O(n²)
 
 """
 
@@ -37,16 +37,19 @@ def selectionSort(array):
 """
 def bubbleSort(array):
     size = len(array)
-    didntChange = True
-    while(didntChange):
+    while True:
+        didntChange = True  # Reset flag
         for i in range(size-1):
             if array[i] > array[i+1]:
-                    didntChange = False
-                    tempItem = array[i+1]
-                    array[i+1] = array[i+1]
-                    array[i+1] = tempItem
-        size-=1
+                didntChange = False  # A swap happened
+                tempItem = array[i]
+                array[i] = array[i+1]
+                array[i+1] = tempItem
+        size -= 1
+        if didntChange:
+            break  # Stop if no swaps occurred
     return array
+
                    
 
 """
@@ -74,11 +77,11 @@ def quickSort(array):
     if len(array) > 1:
         pivot = int(array[0])
         for x in array:
-            if int(x) > int(pivot):
+            if int(x) < int(pivot):
                 less.append(int(x))
             elif int(x) == int(pivot):
                 equal.append(int(x))
-            elif int(x) > int(pivot):
+            else:
                 greater.append(int(x))
         return quickSort(less)+equal+quickSort(greater) 
     else: 
@@ -100,7 +103,7 @@ for i in range(inputSize):
         item = random.randint(-ourMaxValue, ourMaxValue)
     array.append(item)
 
-bubbleSort(array)
+array = bubbleSort(array)
 
 print('Lista Ordenada: ',end='')
 for i in range(0,inputSize-2):
