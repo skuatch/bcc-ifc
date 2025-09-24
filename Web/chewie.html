@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C-3PO em Canvas (Hiper Detalhado)</title>
+    <style>
+        body {
+            background-color: #000; margin: 0; overflow: hidden;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            height: 100vh; font-family: 'Helvetica Neue', sans-serif;
+        }
+        h1 {
+            color: #E6B33A; font-family: 'Impact', sans-serif; letter-spacing: 3px;
+            font-size: clamp(2em, 5vw, 3em); text-shadow: 2px 2px #9A7418; margin: 0 0 15px 0;
+        }
+        canvas {
+            background-color: #000; border: 3px solid #E6B33A;
+            box-shadow: 0 0 25px rgba(230, 179, 58, 0.7);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>C-3PO em Canvas</h1>
+    <canvas id="c3poCanvas" width="500" height="650"></canvas>
+
+    <script>
+        const canvas = document.getElementById('c3poCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const GOLD = '#E6B33A';
+        const DARK_GOLD = '#9A7418';
+        const SHADOW = '#5C4309';
+        const SILVER = '#d1d1d1';
+        const DARK_SILVER = '#ababab';
+        const WIRES = ['#E63946', '#457B9D', '#A8DADC', '#F1FAEE', '#F4A261'];
+        const BLACK = '#000000';
+        const IRIS = '#FFFFFF';
+
+        function drawHead(x, y) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.strokeStyle = BLACK; ctx.lineWidth = 2; ctx.fillStyle = GOLD;
+            ctx.beginPath();
+            ctx.moveTo(0, -55);
+            ctx.bezierCurveTo(40, -55, 40, 0, 40, 15); ctx.bezierCurveTo(40, 35, 15, 40, 0, 40);
+            ctx.bezierCurveTo(-15, 40, -40, 35, -40, 15); ctx.bezierCurveTo(-40, 0, -40, -55, 0, -55);
+            ctx.fill(); ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(0, -55); ctx.quadraticCurveTo(0, -45, 28, -45); ctx.lineTo(28, -35);
+            ctx.quadraticCurveTo(0,-38,0,-38); ctx.quadraticCurveTo(-28,-38,-28,-35);
+            ctx.lineTo(-28, -45); ctx.quadraticCurveTo(0, -45, 0, -55);
+            ctx.stroke();
+            ctx.fillStyle = DARK_GOLD; ctx.beginPath();
+            ctx.arc(-15, -15, 11, 0, Math.PI * 2); ctx.arc(15, -15, 11, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = BLACK; ctx.beginPath();
+            ctx.arc(-15, -15, 8, 0, Math.PI * 2); ctx.arc(15, -15, 8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = IRIS; ctx.beginPath();
+            ctx.arc(-15, -15, 3, 0, Math.PI * 2); ctx.arc(15, -15, 3, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath(); ctx.rect(-20, 10, 40, 20); ctx.fillStyle = DARK_GOLD;
+            ctx.fill(); ctx.stroke();
+            ctx.lineWidth = 1.5;
+            for (let i = 0; i < 6; i++) {
+                ctx.beginPath(); ctx.moveTo(-20, 13 + i * 3); ctx.lineTo(20, 13 + i * 3); ctx.stroke();
+            }
+            ctx.fillStyle = GOLD; ctx.beginPath();
+            ctx.arc(-40, 0, 8, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+            ctx.beginPath(); ctx.arc(40, 0, 8, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+            ctx.restore();
+        }
+
+        function drawNeck(x, y) {
+            ctx.save(); ctx.translate(x, y); ctx.strokeStyle = BLACK; ctx.lineWidth = 2;
+            for(let i=0; i<3; i++){
+                ctx.fillStyle = i === 1 ? DARK_GOLD : GOLD; ctx.beginPath();
+                ctx.rect(-18, i * 8, 36, 8); ctx.fill(); ctx.stroke();
+            }
+            ctx.lineWidth=3; ctx.strokeStyle = DARK_SILVER; ctx.beginPath();
+            ctx.moveTo(-10,-5); ctx.lineTo(-10,25); ctx.moveTo(10,-5); ctx.lineTo(10,25);
+            ctx.stroke(); ctx.restore();
+        }
+
+        function drawTorso(x, y) {
+            ctx.save(); ctx.translate(x, y); ctx.strokeStyle = BLACK; ctx.lineWidth = 3; ctx.fillStyle = GOLD;
+            ctx.beginPath();
+            ctx.moveTo(0, -65); ctx.lineTo(60, -50); ctx.lineTo(60, 45); ctx.lineTo(0, 55);
+            ctx.lineTo(-60, 45); ctx.lineTo(-60, -50);
+            ctx.closePath(); ctx.fill(); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(0, -65); ctx.lineTo(0, 55);
+            ctx.moveTo(-60,-10); ctx.quadraticCurveTo(0,-5,60,-10);
+            ctx.stroke();
+            ctx.fillStyle = DARK_GOLD; ctx.beginPath(); ctx.arc(0, 0, 22, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+            ctx.fillStyle = SHADOW; ctx.beginPath(); ctx.arc(0, 0, 15, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+            ctx.fillStyle = GOLD; ctx.beginPath(); ctx.arc(0, 0, 5, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = BLACK; ctx.beginPath(); ctx.rect(-35, 55, 70, 40); ctx.fill(); ctx.stroke();
+            ctx.lineWidth = 3;
+            for(let i=0; i<7; i++){
+                ctx.strokeStyle = WIRES[i % WIRES.length]; ctx.beginPath();
+                ctx.moveTo(-28 + i * 9, 55); ctx.quadraticCurveTo(-28 + i * 9, 75, -25 + i * 9, 95); ctx.stroke();
+            }
+            ctx.fillStyle = GOLD; ctx.beginPath();
+            ctx.arc(-60,-40, 20, 0, Math.PI*2); ctx.arc(60,-40, 20, 0, Math.PI*2);
+            ctx.fill(); ctx.stroke(); ctx.restore();
+        }
+        
+        function drawPelvis(x, y){
+             ctx.save(); ctx.translate(x, y); ctx.fillStyle = GOLD; ctx.strokeStyle = BLACK; ctx.lineWidth = 3;
+             ctx.beginPath(); ctx.moveTo(-40,0); ctx.lineTo(40,0); ctx.lineTo(30,25);
+             ctx.lineTo(-30,25); ctx.closePath();
+             ctx.fill(); ctx.stroke();
+             ctx.beginPath(); ctx.arc(-25,25,10,0,Math.PI*2); ctx.arc(25,25,10,0,Math.PI*2);
+             ctx.stroke(); ctx.restore();
+        }
+
+        function drawArm(x, y, shoulderAngle, elbowAngle) {
+            ctx.save(); ctx.translate(x, y); ctx.rotate(shoulderAngle);
+            ctx.strokeStyle = BLACK; ctx.lineWidth = 2; ctx.fillStyle = GOLD;
+            
+            // Bíceps
+            ctx.beginPath(); ctx.roundRect(0, -15, 70, 30, 15); ctx.fill(); ctx.stroke();
+            
+            ctx.translate(70, 0); ctx.rotate(elbowAngle);
+            
+            // Cotovelo
+            ctx.fillStyle = DARK_GOLD; ctx.beginPath(); ctx.arc(0,0,15,0,Math.PI*2); ctx.fill(); ctx.stroke();
+            
+            // Antebraço
+            ctx.fillStyle = GOLD; ctx.beginPath(); ctx.roundRect(0, -13, 70, 26, 13); ctx.fill(); ctx.stroke();
+
+            // NOVO: Linha de divisão do antebraço
+            ctx.beginPath(); ctx.lineWidth = 1.5;
+            ctx.moveTo(15, 0); ctx.lineTo(60, 0); ctx.stroke();
+            
+            ctx.translate(70, 0);
+            
+            // NOVO: Dedos detalhados
+            ctx.fillStyle = GOLD; ctx.strokeStyle = BLACK; ctx.lineWidth = 2;
+            // Palma
+            ctx.beginPath(); ctx.moveTo(0,-13); ctx.lineTo(15, -8); ctx.lineTo(15, 8); ctx.lineTo(0, 13); ctx.closePath();
+            ctx.fill(); ctx.stroke();
+            // Dedos
+            ctx.beginPath(); ctx.roundRect(5, -12, 15, 8, 4); ctx.fill(); ctx.stroke();
+            ctx.beginPath(); ctx.roundRect(5, 4, 15, 8, 4); ctx.fill(); ctx.stroke();
+            
+            ctx.restore();
+        }
+
+        function drawLeg(x, y, isRightLeg) {
+            ctx.save(); ctx.translate(x, y); ctx.strokeStyle = BLACK; ctx.lineWidth = 3;
+            const legColor = isRightLeg ? SILVER : GOLD; const darkLegColor = isRightLeg ? DARK_SILVER : DARK_GOLD;
+            
+            // Coxa
+            ctx.fillStyle = GOLD; ctx.strokeStyle = DARK_GOLD;
+            ctx.beginPath(); ctx.roundRect(-22, 0, 44, 100, 22); ctx.fill(); ctx.stroke();
+            // NOVO: Linha de divisão da coxa
+            ctx.beginPath(); ctx.lineWidth = 1.5; ctx.moveTo(0, 15); ctx.lineTo(0, 85); ctx.stroke();
+
+            ctx.translate(0, 100);
+            
+            // NOVO: Joelho detalhado
+            ctx.fillStyle = GOLD; ctx.beginPath(); ctx.arc(0,0,22,0,Math.PI*2); ctx.fill(); ctx.stroke();
+            ctx.fillStyle = DARK_GOLD; ctx.beginPath(); ctx.rect(-22, -8, 44, 16); ctx.fill(); ctx.stroke();
+            
+            // Canela
+            ctx.fillStyle = legColor; ctx.strokeStyle = darkLegColor;
+            ctx.beginPath(); ctx.roundRect(-18, 0, 36, 100, 18); ctx.fill(); ctx.stroke();
+            
+            ctx.translate(0, 100);
+            
+            // Pé
+            ctx.fillStyle = legColor; ctx.beginPath(); ctx.moveTo(-25, 0); ctx.lineTo(-25, 20);
+            ctx.quadraticCurveTo(0, 30, 40, 20); ctx.lineTo(40, 0); ctx.closePath();
+            ctx.fill(); ctx.stroke(); ctx.restore();
+        }
+
+        function drawStaticC3PO() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const baseX = canvas.width / 2; const baseY = 210;
+            const leftShoulderAngle = 0.25; const leftElbowAngle = 0.4;
+            const rightShoulderAngle = -0.25; const rightElbowAngle = 0.4;
+            drawLeg(baseX - 38, baseY + 120, false);
+            drawLeg(baseX + 38, baseY + 120, true);
+            drawTorso(baseX, baseY);
+            drawPelvis(baseX, baseY + 95);
+            drawNeck(baseX, baseY - 90);
+            drawArm(baseX - 70, baseY - 40, leftShoulderAngle, leftElbowAngle);
+            drawArm(baseX + 70, baseY - 40, rightShoulderAngle, rightElbowAngle);
+            drawHead(baseX, baseY - 125);
+        }
+
+        drawStaticC3PO();
+    </script>
+
+</body>
+</html>
