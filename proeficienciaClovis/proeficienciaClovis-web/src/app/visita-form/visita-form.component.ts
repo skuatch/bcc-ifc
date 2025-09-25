@@ -37,7 +37,6 @@ export class VisitaFormComponent implements OnInit {
     if (this.currentVisitaId) {
       this.isEditMode = true;
       this.visitaService.getVisita(this.currentVisitaId).subscribe(data => {
-        // Format date for datetime-local input
         const formattedDate = new Date(data.dataVisita).toISOString().slice(0, 16);
         this.visitaForm.patchValue({ ...data, dataVisita: formattedDate });
       });

@@ -30,7 +30,7 @@ export class VisitaListComponent implements OnInit {
     if (!id) return;
     if (confirm('Tem certeza que deseja apagar esta visita?')) {
       this.visitaService.deleteVisita(id).subscribe(() => {
-        this.loadVisitas(); // Reload the list after deleting
+        this.loadVisitas();
       });
     }
   }

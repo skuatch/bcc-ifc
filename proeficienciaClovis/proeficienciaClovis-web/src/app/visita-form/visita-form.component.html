@@ -1,50 +1,61 @@
-<div class="form-container">
-  <h2>{{ isEditMode ? 'Editar Visita' : 'Nova Visita' }}</h2>
-  <form [formGroup]="visitaForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="nome">Nome:</label>
-      <input id="nome" type="text" formControlName="nome">
-      <div *ngIf="visitaForm.get('nome')?.invalid && visitaForm.get('nome')?.touched" class="error">
-        Nome é obrigatório.
-      </div>
+<div class="container my-4">
+  <div class="card">
+    <div class="card-header">
+      <h2>{{ isEditMode ? 'Editar Visita' : 'Nova Visita' }}</h2>
     </div>
+    <div class="card-body">
+      <form [formGroup]="visitaForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="nome" class="form-label">Nome:</label>
+          <input id="nome" type="text" formControlName="nome" class="form-control"
+                 [ngClass]="{ 'is-invalid': visitaForm.get('nome')?.invalid && visitaForm.get('nome')?.touched }">
+          <div *ngIf="visitaForm.get('nome')?.invalid && visitaForm.get('nome')?.touched" class="invalid-feedback">
+            Nome é obrigatório.
+          </div>
+        </div>
 
-    <div class="form-group">
-      <label for="lugar">Lugar:</label>
-      <input id="lugar" type="text" formControlName="lugar">
-      <div *ngIf="visitaForm.get('lugar')?.invalid && visitaForm.get('lugar')?.touched" class="error">
-        Lugar é obrigatório.
-      </div>
+        <div class="mb-3">
+          <label for="lugar" class="form-label">Lugar:</label>
+          <input id="lugar" type="text" formControlName="lugar" class="form-control"
+                 [ngClass]="{ 'is-invalid': visitaForm.get('lugar')?.invalid && visitaForm.get('lugar')?.touched }">
+          <div *ngIf="visitaForm.get('lugar')?.invalid && visitaForm.get('lugar')?.touched" class="invalid-feedback">
+            Lugar é obrigatório.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="dataVisita" class="form-label">Data e Horário:</label>
+          <input id="dataVisita" type="datetime-local" formControlName="dataVisita" class="form-control"
+                 [ngClass]="{ 'is-invalid': visitaForm.get('dataVisita')?.invalid && visitaForm.get('dataVisita')?.touched }">
+          <div *ngIf="visitaForm.get('dataVisita')?.invalid && visitaForm.get('dataVisita')?.touched" class="invalid-feedback">
+            Data e Horário são obrigatórios.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="descricao" class="form-label">Descrição:</label>
+          <textarea id="descricao" formControlName="descricao" class="form-control"
+                    [ngClass]="{ 'is-invalid': visitaForm.get('descricao')?.invalid && visitaForm.get('descricao')?.touched }"></textarea>
+          <div *ngIf="visitaForm.get('descricao')?.invalid && visitaForm.get('descricao')?.touched" class="invalid-feedback">
+            Descrição é obrigatória.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="avaliacao" class="form-label">Avaliação (0-10):</label>
+          <input id="avaliacao" type="number" formControlName="avaliacao" class="form-control"
+                 [ngClass]="{ 'is-invalid': visitaForm.get('avaliacao')?.invalid && visitaForm.get('avaliacao')?.touched }">
+          <div *ngIf="visitaForm.get('avaliacao')?.touched" class="invalid-feedback">
+            <span *ngIf="visitaForm.get('avaliacao')?.errors?.['required']">Avaliação é obrigatória.</span>
+            <span *ngIf="visitaForm.get('avaliacao')?.errors?.['min'] || visitaForm.get('avaliacao')?.errors?.['max']">A avaliação deve ser entre 0 e 10.</span>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end">
+          <button type="button" [routerLink]="['/visitas']" class="btn btn-secondary me-2">Cancelar</button>
+          <button type="submit" [disabled]="visitaForm.invalid" class="btn btn-success">Salvar</button>
+        </div>
+      </form>
     </div>
-
-    <div class="form-group">
-      <label for="dataVisita">Data e Horário:</label>
-      <input id="dataVisita" type="datetime-local" formControlName="dataVisita">
-      <div *ngIf="visitaForm.get('dataVisita')?.invalid && visitaForm.get('dataVisita')?.touched" class="error">
-        Data e Horário são obrigatórios.
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="descricao">Descrição:</label>
-      <textarea id="descricao" formControlName="descricao"></textarea>
-      <div *ngIf="visitaForm.get('descricao')?.invalid && visitaForm.get('descricao')?.touched" class="error">
-        Descrição é obrigatória.
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="avaliacao">Avaliação (0-10):</label>
-      <input id="avaliacao" type="number" formControlName="avaliacao">
-      <div *ngIf="visitaForm.get('avaliacao')?.errors?.['required'] && visitaForm.get('avaliacao')?.touched" class="error">
-        Avaliação é obrigatória.
-      </div>
-      <div *ngIf="visitaForm.get('avaliacao')?.errors?.['min'] || visitaForm.get('avaliacao')?.errors?.['max']" class="error">
-        A avaliação deve ser entre 0 e 10.
-      </div>
-    </div>
-
-    <button type="submit" [disabled]="visitaForm.invalid" class="btn btn-primary">Salvar</button>
-    <button type="button" [routerLink]="['/visitas']" class="btn btn-secondary">Cancelar</button>
-  </form>
+  </div>
 </div>

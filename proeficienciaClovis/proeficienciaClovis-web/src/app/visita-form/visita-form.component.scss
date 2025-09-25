@@ -1,44 +1,9 @@
-.form-container {
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #fdfdfd;
+.card-header {
+  background-color: var(--bs-primary-bg-subtle);
+  border-bottom: 2px solid var(--bs-primary);
 }
 
-.form-group {
-  margin-bottom: 15px;
+.form-control:focus {
+  border-color: var(--bs-primary);
+  box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
 }
-
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-  color: #555;
-}
-
-.form-group input, .form-group textarea {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.error {
-  color: #dc3545;
-  font-size: 0.8em;
-  margin-top: 4px;
-}
-
-.btn {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-right: 10px;
-  color: white;
-}
-
-.btn-primary { background-color: #007bff; }
-.btn-secondary { background-color: #6c757d; }
