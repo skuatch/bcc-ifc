@@ -1,0 +1,6 @@
+@proeficienciaClovis_HostAddress = http://localhost:5247
+
+GET {{proeficienciaClovis_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

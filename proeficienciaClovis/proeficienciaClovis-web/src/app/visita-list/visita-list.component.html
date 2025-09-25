@@ -1,0 +1,31 @@
+<div class="container">
+  <h1>Minhas Visitas</h1>
+  <button class="btn btn-primary" [routerLink]="['/visitas/new']">Adicionar Nova Visita</button>
+
+  <table class="visita-table">
+    <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Lugar</th>
+      <th>Data</th>
+      <th>Avaliação</th>
+      <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let visita of visitas">
+      <td>{{ visita.nome }}</td>
+      <td>{{ visita.lugar }}</td>
+      <td>{{ visita.dataVisita | date:'dd/MM/yyyy HH:mm' }}</td>
+      <td>{{ visita.avaliacao }} / 10</td>
+      <td>
+        <button class="btn btn-secondary" [routerLink]="['/visitas/edit', visita.id]">Editar</button>
+        <button class="btn btn-danger" (click)="deleteVisita(visita.id)">Apagar</button>
+      </td>
+    </tr>
+    <tr *ngIf="visitas.length === 0">
+      <td colspan="5">Nenhuma visita cadastrada.</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,50 @@
+<div class="form-container">
+  <h2>{{ isEditMode ? 'Editar Visita' : 'Nova Visita' }}</h2>
+  <form [formGroup]="visitaForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="nome">Nome:</label>
+      <input id="nome" type="text" formControlName="nome">
+      <div *ngIf="visitaForm.get('nome')?.invalid && visitaForm.get('nome')?.touched" class="error">
+        Nome é obrigatório.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="lugar">Lugar:</label>
+      <input id="lugar" type="text" formControlName="lugar">
+      <div *ngIf="visitaForm.get('lugar')?.invalid && visitaForm.get('lugar')?.touched" class="error">
+        Lugar é obrigatório.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="dataVisita">Data e Horário:</label>
+      <input id="dataVisita" type="datetime-local" formControlName="dataVisita">
+      <div *ngIf="visitaForm.get('dataVisita')?.invalid && visitaForm.get('dataVisita')?.touched" class="error">
+        Data e Horário são obrigatórios.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="descricao">Descrição:</label>
+      <textarea id="descricao" formControlName="descricao"></textarea>
+      <div *ngIf="visitaForm.get('descricao')?.invalid && visitaForm.get('descricao')?.touched" class="error">
+        Descrição é obrigatória.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="avaliacao">Avaliação (0-10):</label>
+      <input id="avaliacao" type="number" formControlName="avaliacao">
+      <div *ngIf="visitaForm.get('avaliacao')?.errors?.['required'] && visitaForm.get('avaliacao')?.touched" class="error">
+        Avaliação é obrigatória.
+      </div>
+      <div *ngIf="visitaForm.get('avaliacao')?.errors?.['min'] || visitaForm.get('avaliacao')?.errors?.['max']" class="error">
+        A avaliação deve ser entre 0 e 10.
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="visitaForm.invalid" class="btn btn-primary">Salvar</button>
+    <button type="button" [routerLink]="['/visitas']" class="btn btn-secondary">Cancelar</button>
+  </form>
+</div>
